@@ -12,5 +12,6 @@ public class Main {
             System.out.println("i = " + i);
         }
         System.out.println("开始学Java，今天跑通第一个程序！");
+        System.out.println("提交推送练习！");
     }
 }
