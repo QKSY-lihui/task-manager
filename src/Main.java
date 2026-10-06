@@ -2,36 +2,93 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //照着案例，练习控制台输入输出
-        /*Scanner scanner = new Scanner(System.in);
+        //todo 条件语句if学习
+        /*int score = 85;
+        if (score>=90){
+            System.out.println("优秀");
+        } else if (score>=80) {
+            System.out.println("良好");
+        } else if (score>=60) {
+            System.out.println("及格");
+        }else {
+            System.out.println("不及格");
+        }*/
 
-        System.out.println("请输入你的名字：");
-        String name = scanner.nextLine();
+        //todo 条件switch语句
+        /*int day =3;
+        switch(day){
+            case 1:
+                System.out.println("星期一");
+                break;
+            case 2:
+                System.out.println("星期二");
+                break;
+            case 3:
+                System.out.println("星期三");
+                break;
+            default:
+                System.out.println("其他");
+                break;
+        }*/
 
-        System.out.println("请输入你的年龄：");
-        int age = scanner.nextInt();
+        //独立练习：成绩等级判断
+        /*System.out.println("成绩等级判断");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("你好，"+name+"。你今年"+age+"岁。");
+        System.out.println("输入成绩：");
+        int score = scanner.nextInt();
+        if (100>=score && score>=90) {
+            System.out.println("优秀");
+        }else if (score>=80 && score<90) {
+            System.out.println("良好");
+        }if (score>=60 && score<80) {
+            System.out.println("及格");
+        }else if (score<60 &&score>=0){
+            System.out.println("不及格");
+        } else {
+            System.out.println("输入分数不合法！");
+        }
+*/
+        //todo switch语句练习
 
-        scanner.close();
-        */
-        //不看案例，独立编写商品结算小程序
-        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("switch语句练习");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("商品结算小程序");
-        System.out.println("请输入商品价格：");
-        double price = scanner1.nextDouble();
+        System.out.println("请输入成绩：");
+        int score = scanner.nextInt();
 
-        System.out.println("请输入商品数量：");
-        int number = scanner1.nextInt();
+        if (score> 100 || score < 0){
+            System.out.println("输入分数不合法！");
+        }else {
+            switch(score/10){
+                case 10:
+                case 9:
+                    System.out.println("优秀");
+                    break;
+                case 8:
+                    System.out.println("良好");
+                    break;
+                case 7:
+                    System.out.println("及格");
+                    break;
+                case 6:
+                    System.out.println("及格");
+                    break;
+                case 5:
+                case 4:
+                case 3:
+                case 2:
+                case 1:
+                case 0:
+                    System.out.println("不及格");
+                    break;
 
-        double total = price * number;
-        if (total>100){total=total*0.9;}
-        System.out.println("商品总价为："+total);
+        }
 
-        scanner1.close();
+
+        }
+
 
     }
-
 
 }
