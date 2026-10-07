@@ -2,29 +2,44 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-       /*//闰年判断
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入年份：");
-        int year = scanner.nextInt();
-        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-            System.out.println(year + "是闰年");
-        } else {
-            System.out.println(year + "不是闰年");
-        }*/
-
-        //寻找1~100能被3整除的数
-        int count = 0;
-        for (int i = 1; i <= 100; i++) {
-            if (i % 3 == 0){
-                System.out.print(i + " ");
-                count++;
-                if (count % 5 ==0) {
-                    System.out.println();
-                }
-            }
-        }
+        playGame();
     }
 
+    //生成随机数
+    public static int generateRandomNumber() {
+        return (int) (Math.random() * 100) + 1;
+    }
+
+    //获取猜测数字
+    public static int getGuessNumber(Scanner scanner) {
+        System.out.print("请输入猜测的数字：");
+        return scanner.nextInt();
+    }
+
+    //判断猜测数字
+    public static boolean checkNumber(int randomNumber, int guessNumber) {
+        if (guessNumber > randomNumber) {
+            System.out.println("太大了！");
+        } else if (guessNumber < randomNumber) {
+            System.out.println("太小了！");
+        } else {
+            System.out.println("恭喜你，猜对了！");
+            return true;
+        }
+        return false;
+    }
+
+    //游戏循环体
+    public static void playGame() {
+        Scanner scanner = new Scanner(System.in);
+        int randomNumber = generateRandomNumber();
+        while (true) {
+            int guessNumber = getGuessNumber(scanner);
+            if (checkNumber(randomNumber, guessNumber)){
+                break;
+            }
+        }
+
+    }
 
 }
