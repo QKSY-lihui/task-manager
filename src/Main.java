@@ -6,7 +6,7 @@ public class Main {
         //声明
         int[] scores = new int[5];
         //赋值
-        scores[0] = 60;
+        scores[0] = 61;
         scores[1] = 75;
         scores[2] = 55;
         scores[3] = 90;
@@ -16,14 +16,13 @@ public class Main {
             System.out.println("Score " + i + ": " + scores[i]);
         }
 
-
         //自定义算法、Arrays工具类和stream流
 
         //排序,升序
         Arrays.sort(scores);
-        //降序
+        //降序，补充索引含义使用错误，应使用scores.length - i
         for (int i = scores.length - 1; i >= 0; i--) {
-            System.out.println("Score " + i + ": " + scores[i]);
+            System.out.println("Score " + (scores.length - i) + ": " + scores[i]);
         }
 
         //和
@@ -36,11 +35,13 @@ public class Main {
         int sum2 = Arrays.stream(scores).sum();
         System.out.println("Sum2: " + sum2);
 
-        //平均值
-        double average1 = sum1 / scores.length;
+        //平均值,注意强制类型转换
+        double average = sum1 / scores.length;
+        double average1 = (double)sum1 / scores.length;
         double average2 = Arrays.stream(scores).average().orElse(0.0);
-        System.out.println("Average1: " + average1);
-        System.out.println("Average2: " + average2);
+        System.out.println("直接整除Average: " + average);
+        System.out.println("强制类型转换Average1: " + average1);
+        System.out.println("Arrays方法Average2: " + average2);
         //最大值
         int max1 = scores[0];
         for (int i = 1; i < scores.length; i++) {
