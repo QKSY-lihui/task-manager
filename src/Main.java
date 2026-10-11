@@ -3,77 +3,79 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //声明
-        int[] scores = new int[5];
-        //赋值
-        scores[0] = 61;
-        scores[1] = 75;
-        scores[2] = 55;
-        scores[3] = 90;
-        scores[4] = 85;
-        //遍历输出
-        for (int i = 0; i < scores.length; i++) {
-            System.out.println("Score " + i + ": " + scores[i]);
+        //二维数组
+        //声明直接赋值
+        int[][] array = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+        /*
+        //先声明再赋值
+        int[][] array1 = new int[3][3];
+        array1[0][1] = 1;
+        array1[0][2] = 2;*/
+
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j] + " ");
+            }
+            System.out.println();
+
         }
 
-        //自定义算法、Arrays工具类和stream流
-
-        //排序,升序
-        Arrays.sort(scores);
-        //降序，补充索引含义使用错误，应使用scores.length - i
-        for (int i = scores.length - 1; i >= 0; i--) {
-            System.out.println("Score " + (scores.length - i) + ": " + scores[i]);
+        //二维数组统计
+        int[][] array2 = {
+                {1, 3, 2, 9},
+                {5, 7, 6, 8},
+                {9, 10, 11, 12}
+        };
+        for (int i = 0; i < array2.length; i++) {
+            for (int j = 0; j < array2[i].length; j++) {
+                System.out.print(array2[i][j] + " ");
+            }
+            System.out.println();
         }
-
-        //和
-        int sum1 = 0;
-        for (int score : scores) {
-            sum1 += score;
+        //总和
+        int sum =0;
+        for (int i = 0; i < array2.length; i++) {
+            for (int j = 0; j < array2[i].length; j++) {
+                sum += array2[i][j];
+            }
         }
-        System.out.println("Sum1: " + sum1);
-
-        int sum2 = Arrays.stream(scores).sum();
-        System.out.println("Sum2: " + sum2);
-
-        //平均值,注意强制类型转换
-        double average = sum1 / scores.length;
-        double average1 = (double)sum1 / scores.length;
-        double average2 = Arrays.stream(scores).average().orElse(0.0);
-        System.out.println("直接整除Average: " + average);
-        System.out.println("强制类型转换Average1: " + average1);
-        System.out.println("Arrays方法Average2: " + average2);
+        System.out.println("总和为: " + sum);
+        //平均值
+        double average = (double) sum / (array2.length * array2[0].length);
+        System.out.println("平均值为: " + average);
         //最大值
-        int max1 = scores[0];
-        for (int i = 1; i < scores.length; i++) {
-            if (scores[i] > max1) {
-                max1 = scores[i];
+        int max =array2[0][0];
+        for (int i = 0; i < array2.length; i++) {
+            for (int j = 0; j < array2[i].length; j++) {
+                if (array2[i][j] > max){
+                    max = array2[i][j];
+                }
             }
+
         }
-        System.out.println("Max1: " + max1);
-        //最小值
-        int min1 = scores[0];
-        for (int i = 1; i < scores.length; i++) {
-            if (scores[i] < min1) {
-                min1 = scores[i];
+        System.out.println("最大值为: " + max);
+        //最小值，同理
+
+        //二维数组排序
+        Arrays.sort(array2, (a, b) -> a[0] - b[0]); // 按第一列排序
+        System.out.println(Arrays.deepToString(array2));
+        Arrays.sort(array2, (a, b) -> a[1] - b[1]); // 按第二列排序
+        System.out.println(Arrays.deepToString(array2));
+        Arrays.sort(array2, (a, b) -> a[2] - b[2]); // 按第三列排序
+        System.out.println(Arrays.deepToString(array2));
+
+        //5*5乘法表
+        for (int i = 1; i <= 5; i++) {
+            for (int j = 1; j <= 5; j++) {
+                System.out.print(i*j+"\t");
             }
+            System.out.println();
+
         }
-        System.out.println("Min1: " + min1);
-        //数组长度
-        System.out.println("Array length: " + scores.length);
-
-        //数组转字符串
-        String scoresString = Arrays.toString(scores);
-        System.out.println("Array as string: " + scoresString);
-        //数组复制
-        int[] scoresCopy = Arrays.copyOf(scores, scores.length);
-        System.out.println("Array copy: " + Arrays.toString(scoresCopy));
-        //数组比较
-        boolean areEqual = Arrays.equals(scores, scoresCopy);
-        System.out.println("Arrays are equal: " + areEqual);
-        //数组填充
-        Arrays.fill(scores, 0);
-        System.out.println("Array after fill: " + Arrays.toString(scores));
-
     }
 
 }
