@@ -6,7 +6,7 @@ public class Main {
         System.out.println("学生成绩管理系统");
         Scanner scanner = new Scanner(System.in);
         int[] scores = inputScores(scanner);
-        printSocre(scores);
+        printScore(scores);
         scanner.close();
     }
     //输入成绩
@@ -21,7 +21,7 @@ public class Main {
         return scores;
     }
     //遍历打印成绩
-    public static void printSocre(int[] scores){
+    public static void printScore(int[] scores){
         for (int i = 0; i < scores.length; i++) {
             System.out.println("第" + (i + 1) + "个学生的成绩是" + scores[i]);
         }
