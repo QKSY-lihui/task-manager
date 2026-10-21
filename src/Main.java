@@ -1,101 +1,108 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Student[] students = inputScores(scanner);
-        printScores(students);
-        printStatistics(students);
+        //创建String集合
+        ArrayList<String> list = new ArrayList<>();
 
-        System.out.println("请输入要查找的成绩：");
-        int target = scanner.nextInt();
-        int index = findScore(students, target);
-        if (index != -1){
-            System.out.println("找到该成绩学生为：" + students[index].getName() + " " + students[index].getId());
-        }else {
-            System.out.println("未找到该成绩");
+        //添加元素
+        list.add("zs");
+        list.add("ls");
+
+        //获取元素
+        String first = list.get(0);
+
+        //修改元素
+        list.set(0,"ww");
+
+        //删除元素
+        list.remove(1);
+
+        int size = list.size();
+        System.out.println(size);
+
+        //判断是否包含元素
+        boolean hasZS = list.contains("zs");
+        System.out.println(hasZS);
+
+        //两种遍历，一种普通循环，推荐增强for循环
+        for (String s : list){
+            System.out.println(s);
         }
 
-        printSorted(students);
-        System.out.println("排序后成绩：");
-        printScores(students);
+        //练习通讯录管理。
+        System.out.println("通讯录管理");
+        ArrayList<String> addressBook = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean runnning = true;
+        while(runnning){
+            System.out.println("请输入操作选项：1.添加联系人 2.删除联系人 3.修改联系人 4.查询联系人 5.显示联系人 6.退出");
+            int option = scanner.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("请输入联系人名称：");
+                    String name = scanner.next();
+                    addressBook.add(name);
+                    System.out.println("添加成功");
+                    break;
+                case 2:
+                    System.out.println("请输入要删除的联系人名称：");
+                    String removeName = scanner.next();
+                    if (addressBook.contains(removeName)){
+                        addressBook.remove(removeName);
+                        System.out.println("删除成功");
+                    } else {
+                        System.out.println("联系人不存在");
+                    }
+                    break;
+                case 3:
+                    System.out.println("请输入要删除联系人名称：");
+                    String oldName = scanner.next();
+                    int index = addressBook.indexOf(oldName);
+                    if (index != -1){
+                        System.out.println("请输入新的联系人名称：");
+                        String newName = scanner.next();
+                        addressBook.set(index, newName);
+                        System.out.println("修改成功");
+                    }else {
+                        System.out.println("联系人不存在");
+                    }
+                    break;
+                case 4:
+                    System.out.println("请输入要查询的联系人名称：");
+                    String queryName = scanner.next();
+                    if (addressBook.contains(queryName)){
+                        System.out.println("联系人存在");
+                    }else {
+                        System.out.println("联系人不存在");
+                    }
+                    break;
+                case 5:
+                    System.out.println("显示联系人");
+                    for (String address :addressBook){
+                        System.out.println(address);
+                    }
+                    break;
+                case 6:
+                    System.out.println("退出系统");
+                    runnning = false;
+                    break;
+                default:
+                    System.out.println("输入错误");
+                    break;
+
+
+            }
+
+
+        }
+        System.out.println("程序已经安全退出！");
         scanner.close();
 
-    }
-    // 录入成绩
-    public static Student[] inputScores(Scanner scanner) {
-        System.out.print("请输入学生人数：");
-        int count = scanner.nextInt();
-        //int[] scores = new int[count];
-        Student[] students = new Student[count];
-        for (int i = 0; i < count; i++) {
-            System.out.println("请输入第 " + (i + 1) + " 个学生的信息：");
-            System.out.println("姓名：");
-            String name = scanner.next();
-            System.out.println("学号：");
-            int id = scanner.nextInt();
-            System.out.println("分数：");
-            int score = scanner.nextInt();
-            students[i] = new Student(name, id, score);
-
-        }
-        return students;
-    }
-
-    // 打印成绩
-    public static void printScores(Student[] students) {
-        for (Student student : students){
-            System.out.println(student.getName() + " " + student.getId() + " " + student.getScore());
-        }
-
-
-    }
-
-    // 统计：总分、平均分、最高分、最低分
-    public static void printStatistics(Student[] students) {
-        int sum =0;
-        Student max = students[0];
-        Student min = students[0];
-
-        for (int i = 0; i < students.length; i++) {
-            sum += students[i].getScore();
-            if(students[i].getScore() > max.getScore()){
-                max = students[i];
-            }
-            if (min.getScore() > students[i].getScore()){
-                min = students[i];
-            }
-        }
-        double average = (double)sum/students.length;
-        System.out.println("总分：" + sum);
-        System.out.println("平均分：" + average);
-        System.out.println("最高分：" + max.getScore());
-        System.out.println("最低分：" + min.getScore());
-    }
-
-    // 查找：输入分数，返回索引，找不到返回 -1
-    public static int findScore(Student[] students, int target) {
-        for (int i = 0; i < students.length; i++) {
-            if (students[i].getScore() == target) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    // 排序：升序输出
-    public static void printSorted(Student[] students) {
-        for (int i = 0; i < students.length - 1; i++) {
-            for (int j = 0; j < students.length - 1 - i; j++){
-                if (students[j].getScore() > students[j + 1].getScore()) {
-                    Student temp = students[j];
-                    students[j] = students[j + 1];
-                    students[j + 1] = temp;
-                }
-            }
-        }
-        //Arrays.sort(scores);
     }
 
 }
