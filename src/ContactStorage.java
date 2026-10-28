@@ -5,6 +5,9 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -13,24 +16,30 @@ import java.util.stream.Collectors;
 public class ContactStorage {
     //定义持久化文件路径（在根目录下）
     private static final Path  FILE_PATH = Path.of("contacts.txt");
+    //线程池
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(
+            1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>()
+    );
 
     /**
      * 存储数据到文件
      */
     public static void save(Map<String, User> addressBook) {
-        System.out.println("Saving contacts to file...");
-        // 实现将addressBook保存到FILE_PATH文件中
-        //格式：name,phone,email
-        List<String> lines = addressBook.values().stream()
-                .map(user -> user.getName() + "," + user.getPhone() + "," + user.getEmail())
-                .collect(Collectors.toList());// 企业里兼容性更好的写法
-                //.toList();//jdk17才开始使用
-        try {
-            Files.write(FILE_PATH, lines);
-            System.out.println("保存文件成功");
-        } catch (IOException e) {
-            System.out.println("保存文件失败：" + e.getMessage());;
-        }
+        executor.execute(() -> {
+            System.out.println("Saving contacts to file...");
+            // 实现将addressBook保存到FILE_PATH文件中
+            //格式：name,phone,email
+            List<String> lines = addressBook.values().stream()
+                    .map(user -> user.getName() + "," + user.getPhone() + "," + user.getEmail())
+                    .collect(Collectors.toList());// 企业里兼容性更好的写法
+            //.toList();//jdk17才开始使用
+            try {
+                Files.write(FILE_PATH, lines);
+                System.out.println("保存文件成功");
+            } catch (IOException e) {
+                System.out.println("保存文件失败：" + e.getMessage());;
+            }
+        });
     }
 
     /**
