@@ -65,6 +65,8 @@ public class Main {
                     break;
             }
         }
+        System.out.println("正在关闭系统...");
+        ContactStorage.shutdown();//优雅关闭线程池,等线程池所有任务执行完毕，确保数据持久化
         System.out.println("程序已经安全退出！");
     }
 

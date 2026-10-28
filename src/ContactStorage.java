@@ -56,7 +56,6 @@ public class ContactStorage {
         }
         try {
             List<String> lines = Files.readAllLines(FILE_PATH);
-            System.out.println(lines.toString());
             for (String line : lines) {
                 // 跳过空行，等价于(line.isEmpty()||line=="")
                 if (line.trim().isEmpty()) {continue;}
@@ -75,5 +74,21 @@ public class ContactStorage {
             System.out.println("读取文件失败：" + e.getMessage());;
         }
         return addressBook;
+    }
+
+    /**
+     * 优雅关闭线程池
+     */
+    public static void shutdown() {
+        executor.shutdown();//拒绝新任务，等待已提交的任务执行完
+        try {
+            if (!executor.awaitTermination(5, TimeUnit.SECONDS)) {//等待5秒，如果超时则关闭
+                System.out.println("警告：线程池关闭超时5秒，正在强制关闭");
+                executor.shutdownNow();//拒绝新任务，立即关闭
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            //恢复中断状态
+        }Thread.currentThread().interrupt();
     }
 }
