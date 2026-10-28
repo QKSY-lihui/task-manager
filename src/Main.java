@@ -4,7 +4,8 @@ public class Main {
     public static void main(String[] args) {
         //练习通讯录管理。
         System.out.println("通讯录管理");
-        HashMap<String, User> addressBook = new HashMap<>();
+        //加载数据
+        HashMap<String, User> addressBook = (HashMap<String, User>) ContactStorage.load();
 
         boolean runnning = true;
         while(runnning){
@@ -56,6 +57,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("退出系统");
+                    ContactStorage.save(addressBook);//持久化数据
                     runnning = false;
                     break;
                 default:
