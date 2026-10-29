@@ -19,12 +19,14 @@ public class Main {
                     String email = ConsoleInputUtil.readNonEmptyString("请输入邮箱：");
                     User newUser = new User(name, phone, email);
                     addressBook.put(name, newUser);
+                    ContactStorage.save(addressBook);
                     System.out.println("添加成功");
                     break;
                 case 2:
                     String removeName = ConsoleInputUtil.readNonEmptyString("请输入要删除的联系人名称：");
                     if (addressBook.containsKey(removeName)){
                         addressBook.remove(removeName);
+                        ContactStorage.save(addressBook);
                         System.out.println("删除成功");
                     } else {
                         System.out.println("联系人不存在");
@@ -36,6 +38,7 @@ public class Main {
                         User user = addressBook.get(oldName);
                         user.setPhone(ConsoleInputUtil.readNonEmptyString("请输入新的联系人号码："));
                         user.setEmail(ConsoleInputUtil.readNonEmptyString("请输入新的邮箱："));
+                        ContactStorage.save(addressBook);
                         System.out.println("修改成功");
                     }else {
                         System.out.println("联系人不存在");
@@ -57,7 +60,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("退出系统");
-                    ContactStorage.save(addressBook);//持久化数据
+                    ContactStorage.saveSync(addressBook);//同步持久化数据,
                     runnning = false;
                     break;
                 default:
